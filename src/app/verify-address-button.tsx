@@ -4,7 +4,7 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 
-export function VerifyWalletButton() {
+export function VerifyAddressButton() {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
