@@ -45,7 +45,9 @@ export function Toolbar() {
                   <div className="flex items-center gap-2">
                     <Button
                       size="icon"
-                      variant={activeOption === "pointer" ? "default" : "ghost"}
+                      variant={
+                        activeOption === "pointer" ? "secondary" : "ghost"
+                      }
                       onClick={() => setActiveOption("pointer")}
                       className="rounded-lg p-2.5"
                     >
@@ -53,30 +55,27 @@ export function Toolbar() {
                     </Button>
                     <ChevronDown className="size-3" />
                   </div>
-
                   <Button
                     size="icon"
-                    variant={activeOption === "ruler" ? "default" : "ghost"}
+                    variant={activeOption === "ruler" ? "secondary" : "ghost"}
                     onClick={() => setActiveOption("ruler")}
                     className="rounded-lg p-2.5"
                   >
                     <Ruler className="size-6" />
                   </Button>
-
                   <Button
                     size="icon"
                     variant={
-                      activeOption === "square-pen" ? "default" : "ghost"
+                      activeOption === "square-pen" ? "secondary" : "ghost"
                     }
                     onClick={() => setActiveOption("square-pen")}
                     className="rounded-lg p-2.5"
                   >
                     <SquarePen className="size-6" />
                   </Button>
-
                   <Button
                     size="icon"
-                    variant={activeOption === "message" ? "default" : "ghost"}
+                    variant={activeOption === "message" ? "secondary" : "ghost"}
                     onClick={() => setActiveOption("message")}
                     className="rounded-lg p-2.5"
                   >
@@ -103,7 +102,6 @@ export function Toolbar() {
                     </Button>
                     <ChevronDown className="size-3" />
                   </div>
-
                   <div className="r flex items-center gap-2">
                     <Button
                       size="icon"
@@ -115,7 +113,6 @@ export function Toolbar() {
                     </Button>
                     <ChevronDown className="size-3" />
                   </div>
-
                   <div className="r flex items-center gap-2">
                     <Button
                       size="icon"
@@ -127,7 +124,6 @@ export function Toolbar() {
                     </Button>
                     <ChevronDown className="size-3" />
                   </div>
-
                   <div className="r flex items-center gap-2">
                     <Button
                       size="icon"
@@ -141,7 +137,6 @@ export function Toolbar() {
                     </Button>
                     <ChevronDown className="size-3" />
                   </div>
-
                   <Button
                     size="icon"
                     variant={activeOption === "type" ? "default" : "ghost"}
@@ -150,7 +145,6 @@ export function Toolbar() {
                   >
                     <Type className="size-6" />
                   </Button>
-
                   <Button
                     size="icon"
                     variant={activeOption === "message" ? "default" : "ghost"}
@@ -159,7 +153,6 @@ export function Toolbar() {
                   >
                     <MessageCircle className="size-6" />
                   </Button>
-
                   <Button
                     size="icon"
                     variant={activeOption === "more" ? "default" : "ghost"}
