@@ -19,19 +19,38 @@ import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import useMeasure from "react-use-measure";
 
 export function Toolbar() {
-  const [ref, bounds] = useMeasure();
+  const [toolbarRef, toolbarBounds] = useMeasure();
   const [devMode, setDevMode] = React.useState(false);
+  const [labelActive, setLabelActive] = React.useState(false);
   const [activeOption, setActiveOption] = React.useState("pointer");
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLabelActive(true);
+    }, 200);
+
+    const closeTimeout = setTimeout(() => {
+      setLabelActive(false);
+    }, 1300);
+
+    return () => clearTimeout(closeTimeout);
+  }, [setLabelActive, devMode]);
 
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
-      <div className="flex divide-x rounded-xl border shadow-lg">
+      <div className="relative flex divide-x rounded-xl border shadow-md">
+        {labelActive && (
+          <div className="absolute -top-20 left-1/2 flex h-14 -translate-x-1/2 items-center justify-center whitespace-nowrap rounded-xl border px-5 font-semibold shadow-md">
+            <p>{`Switched to ${devMode ? "dev mode" : "design mode"}`}</p>
+          </div>
+        )}
+
         <motion.div
           transition={{ delay: 0.05 }}
-          animate={{ width: bounds.width }}
+          animate={{ width: toolbarBounds.width }}
           className="relative flex gap-2 divide-x overflow-hidden"
         >
-          <div ref={ref} className="">
+          <div ref={toolbarRef}>
             <AnimatePresence initial={false} mode="popLayout">
               {devMode ? (
                 <motion.div
