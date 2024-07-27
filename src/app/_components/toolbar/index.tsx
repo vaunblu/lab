@@ -22,19 +22,27 @@ export function Toolbar() {
   const [toolbarRef, toolbarBounds] = useMeasure();
   const [devMode, setDevMode] = React.useState(false);
   const [labelActive, setLabelActive] = React.useState(false);
+  const [enableLabel, setEnableLabel] = React.useState(false);
   const [activeOption, setActiveOption] = React.useState("pointer");
 
   React.useEffect(() => {
-    setTimeout(() => {
-      setLabelActive(true);
-    }, 200);
+    if (enableLabel) {
+      setTimeout(() => {
+        setLabelActive(true);
+      }, 200);
 
-    const closeTimeout = setTimeout(() => {
-      setLabelActive(false);
-    }, 1300);
+      const closeTimeout = setTimeout(() => {
+        setLabelActive(false);
+      }, 1300);
 
-    return () => clearTimeout(closeTimeout);
-  }, [setLabelActive, devMode]);
+      return () => clearTimeout(closeTimeout);
+    }
+  }, [setLabelActive, devMode, enableLabel]);
+
+  function handleSwitchClick() {
+    if (!enableLabel) setEnableLabel(true);
+    setDevMode((prevState) => !prevState);
+  }
 
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
@@ -191,7 +199,7 @@ export function Toolbar() {
           layout
           className="flex items-center justify-center p-2.5"
         >
-          <DevSwitch checked={devMode} onCheckedChange={setDevMode} />
+          <DevSwitch checked={devMode} onCheckedChange={handleSwitchClick} />
         </motion.div>
       </div>
     </MotionConfig>
