@@ -14,6 +14,79 @@ export const RatePopoverContext = React.createContext<{
   setOpen: () => null,
 });
 
+function LoveThisButton() {
+  const ctx = React.useContext(RatePopoverContext);
+  const [loveThis, setLoveThis] = React.useState(false);
+
+  React.useEffect(() => {
+    if (loveThis) {
+      const timeout = setTimeout(() => {
+        setLoveThis(false);
+        ctx.setOpen(false);
+      }, 900);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [loveThis, setLoveThis, ctx.setOpen]);
+
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={() => setLoveThis(true)}
+      className="size-16 relative rounded-full p-2"
+    >
+      <motion.div
+        whileTap={{ y: 5, rotate: 5, transition: { duration: 0.1 } }}
+        animate={
+          loveThis
+            ? {
+                y: [5, -35, 0],
+                x: [0, -5, 0],
+                rotate: [5, -10, 0],
+              }
+            : {}
+        }
+        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
+      >
+        <ThumbsUp className="size-10" />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={
+          loveThis
+            ? {
+                y: [5, -10, -8],
+                x: [0, 10, 20],
+                rotate: [5, -10, 0],
+                opacity: [1, 1, 0],
+                scale: [0, 1, 0],
+              }
+            : {}
+        }
+        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
+        className="size-2 absolute right-2 rounded-full bg-foreground"
+      />
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={
+          loveThis
+            ? {
+                y: [5, -20, -8],
+                x: [0, 15, 20],
+                rotate: [5, -10, 0],
+                opacity: [1, 1, 0],
+                scale: [0, 1, 0],
+              }
+            : {}
+        }
+        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
+        className="size-2 absolute right-3 top-3 rounded-full bg-foreground"
+      />
+    </Button>
+  );
+}
+
 function RatePopover() {
   const ctx = React.useContext(RatePopoverContext);
 
@@ -77,13 +150,7 @@ function RatePopover() {
                       <p className="text-nowrap">I like this</p>
                     </div>
                     <div className="flex flex-col items-center gap-2">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="size-16 rounded-full p-2"
-                      >
-                        <ThumbsUp className="size-10" />
-                      </Button>
+                      <LoveThisButton />
                       <p className="text-nowrap">Love this!</p>
                     </div>
                     <Popover.Close className="absolute -bottom-[68px] left-1/2 flex -translate-x-1/2 items-center justify-center rounded-full bg-white p-1.5 shadow-md">
