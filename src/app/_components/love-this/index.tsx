@@ -153,7 +153,7 @@ function RatePopover() {
                     fill={ctx.active ? "currentColor" : "none"}
                   />
                 </div>
-                <p>Rate</p>
+                <p>{ctx.active ? "Rated" : "Rate"}</p>
               </motion.div>
             ) : (
               <div className="h-[88px] w-[56px]" />
