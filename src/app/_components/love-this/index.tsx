@@ -5,15 +5,51 @@ import * as Popover from "@radix-ui/react-popover";
 import { Check, Send, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { cn } from "@/lib/utils";
+import styles from "./styles.module.css";
 
 export const RatePopoverContext = React.createContext<{
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  active: boolean;
+  setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }>({
   open: false,
   setOpen: () => null,
+  active: false,
+  setActive: () => null,
 });
 
+const loveThisVariants = {
+  press: (custom: { y: number; rotate: number }) => ({
+    y: custom.y,
+    rotate: custom.rotate,
+    transition: { duration: 0.1 },
+  }),
+};
+
+function ThumbsUpIcon(props: { active: boolean; className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="30"
+      height="30"
+      fill={props.active ? "hsl(var(--foreground))" : "currentColor"}
+      stroke="hsl(var(--foreground))"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2.5"
+      className={cn(
+        "lucide lucide-thumbs-up text-background transition-all group-hover:text-muted",
+        styles.child,
+        props.className,
+      )}
+      viewBox="0 0 25 25"
+    >
+      <path d="M7 10v12M15 5.88L14 10h5.83a2 2 0 011.92 2.56l-2.33 8A2 2 0 0117.5 22H4a2 2 0 01-2-2v-8a2 2 0 012-2h2.76a2 2 0 001.79-1.11L12 2a3.13 3.13 0 013 3.88z"></path>
+    </svg>
+  );
+}
 function LoveThisButton() {
   const ctx = React.useContext(RatePopoverContext);
   const [loveThis, setLoveThis] = React.useState(false);
@@ -22,67 +58,76 @@ function LoveThisButton() {
     if (loveThis) {
       const timeout = setTimeout(() => {
         setLoveThis(false);
-        ctx.setOpen(false);
-      }, 900);
+      }, 400);
 
-      return () => clearTimeout(timeout);
+      setTimeout(() => {
+        ctx.setOpen(false);
+      }, 500);
+
+      setTimeout(() => {
+        ctx.setActive(false);
+      }, 1500);
+
+      return () => {
+        clearTimeout(timeout);
+      };
     }
   }, [loveThis, setLoveThis, ctx.setOpen]);
+
+  const allowTap = !loveThis && !ctx.active;
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => setLoveThis(true)}
-      className="size-16 relative rounded-full p-2"
+      className="size-16 relative rounded-full"
+      onClick={() => {
+        if (allowTap) {
+          setLoveThis((prevState) => !prevState);
+          ctx.setActive((prevState) => !prevState);
+        }
+      }}
     >
       <motion.div
-        whileTap={{ y: 5, rotate: 5, transition: { duration: 0.1 } }}
-        animate={
-          loveThis
-            ? {
-                y: [5, -35, 0],
-                x: [0, -5, 0],
-                rotate: [5, -10, 0],
-              }
-            : {}
-        }
-        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
+        whileTap={allowTap ? "press" : ""}
+        tabIndex={-1}
+        className={cn("size-full group", styles.border)}
       >
-        <ThumbsUp className="size-10" />
+        <motion.div
+          variants={loveThisVariants}
+          custom={{ y: 7, rotate: 2 }}
+          animate={
+            loveThis
+              ? {
+                y: -25,
+                x: -3,
+                rotate: -2,
+              }
+              : {}
+          }
+          transition={{ duration: 0.3 }}
+          className="absolute bottom-3.5 left-3.5 z-20"
+        >
+          <ThumbsUpIcon active={ctx.active} />
+        </motion.div>
+        <motion.div
+          variants={loveThisVariants}
+          custom={{ y: 5, rotate: -2 }}
+          animate={
+            loveThis
+              ? {
+                y: -27,
+                x: 3,
+                rotate: 2,
+              }
+              : {}
+          }
+          transition={{ duration: 0.3 }}
+          className="absolute right-2.5 top-3.5 z-10"
+        >
+          <ThumbsUpIcon active={ctx.active} />
+        </motion.div>
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={
-          loveThis
-            ? {
-                y: [5, -10, -8],
-                x: [0, 10, 20],
-                rotate: [5, -10, 0],
-                opacity: [1, 1, 0],
-                scale: [0, 1, 0],
-              }
-            : {}
-        }
-        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
-        className="size-2 absolute right-2 rounded-full bg-foreground"
-      />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={
-          loveThis
-            ? {
-                y: [5, -20, -8],
-                x: [0, 15, 20],
-                rotate: [5, -10, 0],
-                opacity: [1, 1, 0],
-                scale: [0, 1, 0],
-              }
-            : {}
-        }
-        transition={{ bounce: 100, mass: 0.1, duration: 1 }}
-        className="size-2 absolute right-3 top-3 rounded-full bg-foreground"
-      />
     </Button>
   );
 }
@@ -103,7 +148,10 @@ function RatePopover() {
                 className="flex flex-col items-center gap-2"
               >
                 <div className="size-14 inline-flex items-center justify-center whitespace-nowrap rounded-full p-2 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                  <ThumbsUp className="size-8 cursor-pointer" />
+                  <ThumbsUp
+                    className="size-8 cursor-pointer"
+                    fill={ctx.active ? "currentColor" : "none"}
+                  />
                 </div>
                 <p>Rate</p>
               </motion.div>
@@ -176,9 +224,10 @@ function RatePopover() {
 
 export function LoveThis() {
   const [open, setOpen] = React.useState(false);
+  const [active, setActive] = React.useState(false);
 
   return (
-    <RatePopoverContext.Provider value={{ open, setOpen }}>
+    <RatePopoverContext.Provider value={{ open, setOpen, active, setActive }}>
       <div className="flex items-end gap-14 font-semibold">
         <div className="flex flex-col items-center gap-2">
           <Button variant="ghost" size="icon" className="size-14 rounded-full">

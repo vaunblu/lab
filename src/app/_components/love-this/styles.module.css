@@ -1,0 +1,7 @@
+.border .child {
+  filter: drop-shadow(2px 0 0 hsl(var(--background))) drop-shadow(-2px 0 0 hsl(var(--background))) drop-shadow(0 2px 0 hsl(var(--background))) drop-shadow(0 -2px 0 hsl(var(--background)));
+}
+
+.border:hover .child {
+  filter: drop-shadow(2px 0 0 hsl(var(--muted))) drop-shadow(-2px 0 0 hsl(var(--muted))) drop-shadow(0 2px 0 hsl(var(--muted))) drop-shadow(0 -2px 0 hsl(var(--muted)));
+}
