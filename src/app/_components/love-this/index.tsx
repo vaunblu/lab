@@ -105,7 +105,12 @@ function LoveThisButton() {
               }
               : {}
           }
-          transition={{ duration: 0.3 }}
+          transition={{
+            type: "spring",
+            stiffness: 700,
+            damping: 100,
+            duration: 0.38,
+          }}
           className="absolute bottom-3.5 left-3.5 z-20"
         >
           <ThumbsUpIcon active={ctx.active} />
@@ -122,7 +127,12 @@ function LoveThisButton() {
               }
               : {}
           }
-          transition={{ duration: 0.3 }}
+          transition={{
+            type: "spring",
+            stiffness: 600,
+            damping: 68,
+            duration: 0.38,
+          }}
           className="absolute right-2.5 top-3.5 z-10"
         >
           <ThumbsUpIcon active={ctx.active} />
