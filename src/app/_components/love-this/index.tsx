@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as Popover from "@radix-ui/react-popover";
-import { Check, Send, ThumbsDown, ThumbsUp, X } from "lucide-react";
+import { Check, Send, Star, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -26,7 +26,159 @@ const loveThisVariants = {
     rotate: custom.rotate,
     transition: { duration: 0.1 },
   }),
+  initial: {
+    opacity: 0,
+    scale: 0,
+  },
+  animate: (custom: {
+    animateX: number;
+    animateY: number;
+    animateRotate?: number;
+  }) => ({
+    opacity: 1,
+    scale: 1,
+    x: custom.animateX,
+    y: custom.animateY,
+    rotate: custom.animateRotate ?? 0,
+  }),
+  exit: (custom: { exitX: number; exitY: number; exitRotate?: number }) => ({
+    opacity: 0.5,
+    scale: 0.5,
+    x: custom.exitX,
+    y: custom.exitY,
+    rotate: custom.exitRotate ?? 0,
+  }),
 };
+
+const loveThisBaseTransition = {
+  type: "spring",
+  stiffness: 600,
+  damping: 100,
+  duration: 0.48,
+};
+
+function Particles() {
+  return (
+    <>
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: 7,
+          animateY: -9,
+          exitX: 18,
+          exitY: -12,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 600,
+        }}
+        className="size-1.5 absolute bottom-4 right-3 rounded-full bg-foreground"
+      />
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: 15,
+          animateY: -20,
+          exitX: 35,
+          exitY: -15,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 500,
+        }}
+        className="size-2.5 absolute bottom-5 right-2 rounded-full bg-foreground"
+      />
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: 5,
+          animateY: -15,
+          exitX: 10,
+          exitY: -12,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 800,
+        }}
+        className="size-2 absolute -top-2 right-2 rounded-full bg-foreground"
+      />
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: -15,
+          animateY: -9,
+          exitX: -20,
+          exitY: -12,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 600,
+        }}
+        className="size-1.5 absolute left-3 top-2 rounded-full bg-foreground"
+      />
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: -17,
+          animateY: -15,
+          exitX: -21,
+          exitY: -10,
+          animateRotate: -30,
+          exitRotate: -80,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 600,
+        }}
+        className="absolute -top-2 left-6"
+      >
+        <Star
+          className="size-3.5 text-foreground"
+          fill="hsl(var(--foreground))"
+        />
+      </motion.div>
+      <motion.div
+        variants={loveThisVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        custom={{
+          animateX: 20,
+          animateY: -12,
+          exitX: 25,
+          exitY: -10,
+          animateRotate: 30,
+          exitRotate: 80,
+        }}
+        transition={{
+          ...loveThisBaseTransition,
+          stiffness: 600,
+        }}
+        className="absolute right-2 top-1"
+      >
+        <Star
+          className="size-3.5 text-foreground"
+          fill="hsl(var(--foreground))"
+        />
+      </motion.div>
+    </>
+  );
+}
 
 function ThumbsUpIcon(props: { active: boolean; className?: string }) {
   return (
@@ -50,6 +202,7 @@ function ThumbsUpIcon(props: { active: boolean; className?: string }) {
     </svg>
   );
 }
+
 function LoveThisButton() {
   const ctx = React.useContext(RatePopoverContext);
   const [loveThis, setLoveThis] = React.useState(false);
@@ -58,11 +211,11 @@ function LoveThisButton() {
     if (loveThis) {
       const timeout = setTimeout(() => {
         setLoveThis(false);
-      }, 400);
+      }, 500);
 
       setTimeout(() => {
         ctx.setOpen(false);
-      }, 500);
+      }, 600);
 
       setTimeout(() => {
         ctx.setActive(false);
@@ -106,10 +259,8 @@ function LoveThisButton() {
               : {}
           }
           transition={{
-            type: "spring",
-            stiffness: 700,
-            damping: 100,
-            duration: 0.38,
+            ...loveThisBaseTransition,
+            stiffness: 800,
           }}
           className="absolute bottom-3.5 left-3.5 z-20"
         >
@@ -127,17 +278,13 @@ function LoveThisButton() {
               }
               : {}
           }
-          transition={{
-            type: "spring",
-            stiffness: 600,
-            damping: 68,
-            duration: 0.38,
-          }}
-          className="absolute right-2.5 top-3.5 z-10"
+          transition={{ ...loveThisBaseTransition, delay: 0.05 }}
+          className="absolute right-2.5 top-[12px] z-10"
         >
           <ThumbsUpIcon active={ctx.active} />
         </motion.div>
       </motion.div>
+      <AnimatePresence>{loveThis && <Particles />}</AnimatePresence>
     </Button>
   );
 }
