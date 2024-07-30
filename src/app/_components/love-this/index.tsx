@@ -322,12 +322,7 @@ function RatePopover() {
           {ctx.open && (
             <Popover.Portal forceMount>
               <>
-                <Popover.Content
-                  side="top"
-                  sideOffset={20}
-                  onInteractOutside={(e) => e.preventDefault()}
-                  asChild
-                >
+                <Popover.Content side="top" sideOffset={20} asChild>
                   <motion.div
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
