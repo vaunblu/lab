@@ -295,7 +295,7 @@ function RatePopover() {
   return (
     <MotionConfig transition={{ type: "spring", bounce: 0, duration: 0.4 }}>
       <Popover.Root open={ctx.open} onOpenChange={ctx.setOpen}>
-        <Popover.Trigger>
+        <Popover.Trigger className="rounded-full">
           <AnimatePresence initial={false}>
             {!ctx.open ? (
               <motion.div
