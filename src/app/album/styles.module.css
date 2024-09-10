@@ -1,0 +1,15 @@
+.blur-up {
+  mask: linear-gradient(to top, white 50%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.blur-down {
+  mask: linear-gradient(to bottom, black 50%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.metal {
+  background: radial-gradient(circle,
+      rgba(221, 221, 221, 1) 0%,
+      rgba(240, 240, 240, 1) 100%);
+}

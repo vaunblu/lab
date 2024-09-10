@@ -1,0 +1,67 @@
+.toolbar {
+  background: linear-gradient(145deg, #2b2b2b, #242424);
+  box-shadow:
+    30px 30px 60px rgba(32, 32, 32, 0.5),
+    -30px -30px 60px rgba(48, 48, 48, 0.4);
+}
+
+.drop-down {
+  background: linear-gradient(145deg, #2b2b2b, #242424);
+  box-shadow:
+    30px 30px 60px rgba(32, 32, 32, 0.5),
+    -30px -30px 60px rgba(48, 48, 48, 0.1);
+}
+
+.drop-down-trigger {
+  background: linear-gradient(145deg, #3c3c3c, #323232);
+  border: 2px rgba(0, 0, 0, 0);
+  border-top-style: solid;
+  border-left-style: solid;
+}
+
+.drop-down-trigger:hover {
+  background: linear-gradient(145deg, #3c3c3c, #323232);
+}
+
+.drop-down-trigger[data-open="true"] {
+  border-color: rgba(76, 76, 76, 0.6);
+  background: linear-gradient(145deg, #3c3c3c, #323232);
+  box-shadow:
+    12px 12px 28px rgba(45, 45, 45, 0.2),
+    -12px -12px 28px rgba(67, 67, 67, 0.2);
+}
+
+.drop-down-button {
+  border: 2px rgba(0, 0, 0, 0);
+  border-top-style: solid;
+  border-left-style: solid;
+}
+
+.drop-down-button:hover {
+  background: rgba(60, 60, 60, 0.8);
+}
+
+.drop-down-button:active {
+  border-color: rgba(76, 76, 76, 0.6);
+  background: linear-gradient(145deg, #323232, #3c3c3c);
+  box-shadow:
+    0 12px 12px -6px rgba(0, 0, 0, 0.2),
+    12px 12px 28px rgba(45, 45, 45, 0.2),
+    -12px -12px 28px rgba(67, 67, 67, 0.2);
+}
+
+.button {
+  border: 2px rgba(0, 0, 0, 0);
+  border-top-style: solid;
+  border-left-style: solid;
+}
+
+.button:active,
+.button:focus {
+  border-color: rgba(76, 76, 76, 0.6);
+  background: linear-gradient(145deg, #323232, #3c3c3c);
+  box-shadow:
+    0 12px 12px -6px rgba(0, 0, 0, 0.2),
+    12px 12px 28px rgba(45, 45, 45, 0.2),
+    -12px -12px 28px rgba(67, 67, 67, 0.2);
+}
