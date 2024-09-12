@@ -39,7 +39,7 @@ function InnerContent() {
             : {}
         }
         style={{ backgroundAttachment: "fixed" }}
-        className="absolute bottom-0 left-0 h-[220px] w-full rounded-[22px] rounded-tl-none ring-1 ring-white/25"
+        className="absolute bottom-0 left-0 h-[220px] w-full rounded-[22px] rounded-tl-none shadow-[0_48px_48px_-16px_rgba(0,0,0,0.46)] ring-1 ring-white/25"
       >
         <motion.div
           initial={{
@@ -93,7 +93,7 @@ function InnerContent() {
               }
             : {}
         }
-        className="absolute bottom-0 left-0 grid h-48 w-full origin-bottom place-items-center rounded-[22px] bg-gradient-to-br from-[#4d4d4d] to-[#111111] shadow-[0_-1px_1px_1px_rgba(0,0,0,0.06),0_-6px_6px_3px_rgba(0,0,0,0.06),0_-3px_3px_1.5px_rgba(0,0,0,0.06),0_-12px_12px_6px_rgba(0,0,0,0.06),0_-24px_24px_12px_rgba(0,0,0,0.06)] ring-1 ring-white/25"
+        className="absolute bottom-0 left-0 grid h-48 w-full origin-bottom place-items-center rounded-[22px] bg-gradient-to-br from-[#4d4d4d] to-[#111111] shadow-[0_-1px_1px_1px_rgba(0,0,0,0.06),0_-6px_6px_3px_rgba(0,0,0,0.06),0_-3px_3px_1.5px_rgba(0,0,0,0.06),0_-12px_12px_6px_rgba(0,0,0,0.06),0_-24px_24px_12px_rgba(0,0,0,0.06)] ring-1 ring-white/20"
       >
         <div className="relative aspect-[1.5/1] h-[87%] scale-[65%] overflow-hidden bg-black bg-no-repeat [mask:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE2NyIgdmlld0JveD0iMCAwIDI1MCAxNjciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDQuMzM1IDEwNi4xOTlMMCAwTDg1LjE4MTQgNjMuNTE2M1YzNi41ODU0TDE0Ni4xNjkgODUuMzY1OVY1My44NjE4TDI1MCAxNjYuNjY3TDE2Mi4yOTggOTUuMDIwM1YxMjEuNDQzTDEwNC4zMzUgNzQuNjk1MVYxMDYuMTk5WiIgZmlsbD0iI0Q5RDlEOSIvPgo8L3N2Zz4K)]">
           <motion.div
@@ -128,7 +128,7 @@ export default function HomePage() {
   return (
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
-        <main className="relative flex h-screen items-center justify-center">
+        <main className="relative flex h-screen items-center justify-center bg-gradient-to-br from-[#ffffff] to-[#cccccc]">
           <InnerContent />
         </main>
       </MotionConfig>
