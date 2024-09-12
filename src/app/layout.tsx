@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import type {Metadata} from "next";
+import {GeistSans} from "geist/font/sans";
+import {GeistMono} from "geist/font/mono";
 import {
   Chivo_Mono,
   EB_Garamond,
@@ -19,11 +19,6 @@ const EBGaramond = EB_Garamond({
   display: "swap",
 });
 
-// const Mono = Chivo_Mono({
-//   subsets: ["latin"],
-//   variable: "--font-mono",
-//   display: "swap",
-// });
 const Mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
