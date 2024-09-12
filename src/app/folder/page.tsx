@@ -28,14 +28,14 @@ function InnerContent() {
       <motion.div
         initial={{
           backgroundImage:
-            "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.95) 100%)",
+            "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.90) 100%)",
         }}
         animate={
           isOpen
             ? {
-              backgroundImage:
-                "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,1) 80%)",
-            }
+                backgroundImage:
+                  "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,0.95) 80%)",
+              }
             : {}
         }
         style={{ backgroundAttachment: "fixed" }}
@@ -44,38 +44,38 @@ function InnerContent() {
         <motion.div
           initial={{
             backgroundImage:
-              "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.95) 100%)",
+              "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.90) 100%)",
           }}
           animate={
             isOpen
               ? {
-                backgroundImage:
-                  "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,1) 80%)",
-              }
+                  backgroundImage:
+                    "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,0.95) 80%)",
+                }
               : {}
           }
           style={{ backgroundAttachment: "fixed" }}
-          className="absolute -top-8 left-0 h-8 w-[40%] rounded-t-[22px]"
+          className="absolute -top-6 left-0 h-6 w-[40%] rounded-tl-[22px] rounded-tr-[12px]"
         >
           <motion.div
             initial={{
               backgroundImage:
-                "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.95) 100%)",
+                "linear-gradient(to bottom right, rgba(77,77,77,0.95) 0%, rgba(0,0,0,0.90) 100%)",
             }}
             animate={
               isOpen
                 ? {
-                  backgroundImage:
-                    "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,1) 100%)",
-                }
+                    backgroundImage:
+                      "linear-gradient(to bottom right, rgba(77,77,77,1) 0%, rgba(0,0,0,0.95) 100%)",
+                  }
                 : {}
             }
             style={{
               backgroundAttachment: "fixed",
               maskImage:
-                "radial-gradient(circle 22px at 22px 0px, transparent 0, transparent 22px, black 22px)",
+                "radial-gradient(circle 12px at 12px 0px, transparent 0, transparent 12px, black 12px)",
             }}
-            className="absolute -right-[21px] top-[10px] h-[22px] w-[22px]"
+            className="size-3 absolute -right-3 top-3"
           />
         </motion.div>
       </motion.div>
@@ -89,12 +89,25 @@ function InnerContent() {
         animate={
           isOpen
             ? {
-              transform: "perspective(1100px) rotateX(-70deg)",
-            }
+                transform: "perspective(1100px) rotateX(-70deg)",
+              }
             : {}
         }
-        className="absolute bottom-0 left-0 h-48 w-full origin-bottom rounded-[22px] bg-gradient-to-br from-[#3d3d3d] to-[#181818] shadow-[0_-1px_1px_1px_rgba(0,0,0,0.06),0_-6px_6px_3px_rgba(0,0,0,0.06),0_-3px_3px_1.5px_rgba(0,0,0,0.06),0_-12px_12px_6px_rgba(0,0,0,0.06),0_-24px_24px_12px_rgba(0,0,0,0.06)] ring-1 ring-white/25"
-      />
+        className="absolute bottom-0 left-0 grid h-48 w-full origin-bottom place-items-center rounded-[22px] bg-gradient-to-br from-[#4d4d4d] to-[#111111] shadow-[0_-1px_1px_1px_rgba(0,0,0,0.06),0_-6px_6px_3px_rgba(0,0,0,0.06),0_-3px_3px_1.5px_rgba(0,0,0,0.06),0_-12px_12px_6px_rgba(0,0,0,0.06),0_-24px_24px_12px_rgba(0,0,0,0.06)] ring-1 ring-white/25"
+      >
+        <div className="relative aspect-[1.5/1] h-[87%] scale-[65%] overflow-hidden bg-black bg-no-repeat [mask:url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjUwIiBoZWlnaHQ9IjE2NyIgdmlld0JveD0iMCAwIDI1MCAxNjciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xMDQuMzM1IDEwNi4xOTlMMCAwTDg1LjE4MTQgNjMuNTE2M1YzNi41ODU0TDE0Ni4xNjkgODUuMzY1OVY1My44NjE4TDI1MCAxNjYuNjY3TDE2Mi4yOTggOTUuMDIwM1YxMjEuNDQzTDEwNC4zMzUgNzQuNjk1MVYxMDYuMTk5WiIgZmlsbD0iI0Q5RDlEOSIvPgo8L3N2Zz4K)]">
+          <motion.div
+            initial={{ y: 40, x: -60 }}
+            animate={isOpen ? { y: -250, x: -10 } : {}}
+            className="size-[500px] absolute rounded-full bg-[radial-gradient(at_center,rgba(255,255,255,0.95),rgba(255,255,255,0.3)_100%)]"
+          />
+          <motion.div
+            initial={{ height: 0 }}
+            animate={isOpen ? { height: "100%" } : {}}
+            className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black from-40%"
+          />
+        </div>
+      </motion.div>
     </div>
   );
 }
