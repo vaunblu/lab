@@ -1,17 +1,21 @@
-"use client"
+"use client";
 
-import React from "react"
-import {Sidebar} from "../components/sidebar"
-
+import React from "react";
+import { Sidebar } from "../components/sidebar";
 
 function MainContent() {
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">Welcome to the Lab</h1>
-      <p className="mb-4">This is the main page of our UI component laboratory.</p>
-      <p>Select an example from the sidebar to explore different UI components and experiments.</p>
+      <h1 className="mb-4 text-3xl font-bold">Welcome to the Lab</h1>
+      <p className="mb-4">
+        This is the main page of our UI component laboratory.
+      </p>
+      <p>
+        Select an example from the sidebar to explore different UI components
+        and experiments.
+      </p>
     </div>
-  )
+  );
 }
 
 export default function HomePage() {
@@ -24,5 +28,5 @@ export default function HomePage() {
         <MainContent />
       </main>
     </div>
-  )
+  );
 }

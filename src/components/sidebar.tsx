@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import {usePathname} from "next/navigation"
-import {cn} from "@/lib/utils"
-import {Button} from "@/components/ui/button"
-import {ScrollArea} from "@/components/ui/scroll-area"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const examples = [
+    "folder",
     "affirmations",
     "album",
     "bird",
@@ -30,10 +30,10 @@ const examples = [
     "toast",
     "ui-course-form",
     "vinyl",
-]
+];
 
 export function Sidebar() {
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     return (
         <ScrollArea className="h-screen">
@@ -59,5 +59,5 @@ export function Sidebar() {
                 </div>
             </div>
         </ScrollArea>
-    )
+    );
 }
