@@ -2,6 +2,9 @@
 
 import { motion, MotionConfig, type Transition } from "framer-motion";
 import React from "react";
+import Image from "next/image";
+import imagePlayfulInca from "@/assets/playful-inca.jpg";
+import imageStoicInca from "@/assets/stoic-inca.jpg";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -39,7 +42,7 @@ function InnerContent() {
             : {}
         }
         style={{ backgroundAttachment: "fixed", clipPath: "url(#folder)" }}
-        className="size-full absolute bottom-0 left-0 shadow-[0_48px_48px_-16px_rgba(0,0,0,0.46)]"
+        className="size-full absolute bottom-0 left-0 grid place-items-center shadow-[0_48px_48px_-16px_rgba(0,0,0,0.46)]"
       >
         <clipPath id="folder">
           <path
@@ -48,6 +51,61 @@ function InnerContent() {
           />
         </clipPath>
       </motion.svg>
+
+      <motion.div
+        initial={{
+          mask: "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%)",
+        }}
+        animate={
+          isOpen
+            ? {
+                mask: "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)",
+              }
+            : {}
+        }
+        className="absolute -left-[110px] bottom-0 w-[400px] "
+      >
+        <div className="relative left-10 h-[250px] w-[350px] rotate-[70deg] bg-gradient-to-t from-[#eb6060] blur-[2px]" />
+      </motion.div>
+      <motion.div
+        initial={{
+          mask: "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 0%)",
+        }}
+        animate={
+          isOpen
+            ? {
+                mask: "linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)",
+              }
+            : {}
+        }
+        className="absolute -right-[110px] bottom-0 w-[400px] [mask:linear-gradient(to_top,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_80%)]"
+      >
+        <div className="relative left-6 h-[250px] w-80 rotate-[-70deg] bg-gradient-to-t from-[#eb6060] blur-[2px]" />
+      </motion.div>
+
+      <motion.div
+        initial={{ x: 40, y: 95, translateX: "-50%", rotate: "4deg" }}
+        animate={isOpen ? { x: 70, y: 0, rotate: "8deg" } : {}}
+        className="absolute -top-16 left-1/2 aspect-[8.5/11] w-40 overflow-hidden rounded-2xl bg-white shadow-2xl"
+      >
+        <Image
+          src={imageStoicInca}
+          alt="Tailwind"
+          className="size-full object-cover object-bottom"
+        />
+      </motion.div>
+      <motion.div
+        initial={{ x: -40, y: 95, translateX: "-50%", rotate: "0deg" }}
+        animate={isOpen ? { x: -70, y: 0, rotate: "-6deg" } : {}}
+        className="absolute -top-16 left-1/2 aspect-[8.5/11] w-40 overflow-hidden rounded-2xl bg-white shadow-2xl"
+      >
+        <Image
+          src={imagePlayfulInca}
+          alt="Framer Motion"
+          className="size-full object-cover object-top"
+        />
+      </motion.div>
+
       <motion.div
         initial={{
           transform: "perspective(1100px) rotateX(0deg)",
