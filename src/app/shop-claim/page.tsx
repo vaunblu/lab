@@ -41,7 +41,7 @@ function InnerContent() {
             <p className="text-2xl font-semibold tracking-tight">
               Here&apos;s $5!
             </p>
-            <p className="max-w-sm text-lg font-[550] leading-snug">
+            <p className="max-w-xs text-lg font-[550] leading-snug tracking-tight">
               You can spend it in your Shop
               <br />
               app on your favorite brands or products.
