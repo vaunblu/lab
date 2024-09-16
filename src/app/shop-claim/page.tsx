@@ -10,6 +10,9 @@ import {
 import React from "react";
 import Image from "next/image";
 import svgPhone from "@/assets/iphone-black.svg";
+import imageShopDollar from "./shop-dollar.jpg";
+import imageShop from "./shop.png";
+import imageShopify from "./shopify.png";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -22,8 +25,41 @@ function InnerContent() {
   const ctx = React.useContext(Context);
 
   return (
-    <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-[#FAFAFA] text-[#1F1F1F]">
-      <p>Lab</p>
+    <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-white p-2.5 text-[#1F1F1F]">
+      <div className="flex justify-center pb-4 pt-12">
+        <Image src={imageShop} alt="shop logo" className="h-auto w-14" />
+      </div>
+      <div className="relative isolate flex flex-1 flex-col justify-end overflow-hidden rounded-[46px] p-2.5">
+        <Image
+          src={imageShopDollar}
+          alt="shop background"
+          className="size-full absolute left-0 top-0 object-cover brightness-110"
+        />
+
+        <div className="z-10 flex w-full flex-col items-center space-y-6 rounded-[41px] bg-[#cccccc]/30 px-6 py-5 text-center backdrop-blur-xl">
+          <div className="space-y-3">
+            <p className="text-2xl font-semibold tracking-tight">
+              Here&apos;s $5!
+            </p>
+            <p className="max-w-sm text-lg font-[550] leading-snug">
+              You can spend it in your Shop
+              <br />
+              app on your favorite brands or products.
+            </p>
+          </div>
+          <div className="flex w-full flex-col items-center space-y-3">
+            <div className="h-14 w-full rounded-full bg-[#5533ea]"></div>
+            <div className="flex items-center gap-1">
+              <p className="text-sm font-[550]">Powered by</p>
+              <Image
+                src={imageShopify}
+                alt="shopify logo"
+                className="h-5 w-auto brightness-75 grayscale"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -52,10 +88,6 @@ export default function HomePage() {
           >
             <div className="absolute left-1/2 top-1/2 z-20 h-[814px] w-[376px] -translate-x-1/2 -translate-y-1/2">
               <InnerContent />
-            </div>
-
-            <div className="fixed bottom-[72px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28">
-              <div className="size-full rounded-3xl bg-black" />
             </div>
 
             <Image
