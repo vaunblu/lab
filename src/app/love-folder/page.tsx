@@ -155,7 +155,7 @@ export default function HomePage() {
   return (
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
-        <main className="relative flex h-screen items-center justify-center bg-gradient-to-br from-[#ffffff] to-[#cccccc]">
+        <main className="relative flex h-screen items-center justify-center bg-gradient-to-br from-[#ffffff] to-[#ed6363]/30">
           <InnerContent />
         </main>
       </MotionConfig>
