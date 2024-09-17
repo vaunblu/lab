@@ -28,11 +28,11 @@ function InnerContent() {
   const ctx = React.useContext(Context);
   const isClaimed = ctx.status === "claimed";
   const x = useMotionValue(0);
-  const opacity = useTransform(x, [0, 150], [1, 0]);
+  const opacity = useTransform(x, [0, 130], [1, 0]);
   const bgColor = useTransform(
     x,
-    [0, 150],
-    ["rgb(204 204 204 / 0.3)", "rgb(159 226 191 / 0.6)"],
+    [0, 160],
+    ["rgb(204 204 204 / 0.3)", "rgb(159 226 191 / 0.4)"],
   );
 
   React.useEffect(() => {
@@ -50,11 +50,11 @@ function InnerContent() {
       <div className="flex justify-center pb-4 pt-12">
         <Image src={imageShop} alt="shop logo" className="h-auto w-14" />
       </div>
-      <div className="relative isolate flex flex-1 flex-col justify-end overflow-hidden rounded-[46px] p-2.5">
+      <div className="relative isolate flex flex-1 flex-col justify-end overflow-hidden rounded-[46px] border p-2.5">
         <Image
           src={imageShopDollar}
           alt="shop background"
-          className="size-full absolute left-0 top-0 rounded-[46px] object-cover brightness-110"
+          className="size-full absolute left-0 top-0 rounded-[46px] object-cover brightness-125 grayscale"
         />
 
         <motion.div
