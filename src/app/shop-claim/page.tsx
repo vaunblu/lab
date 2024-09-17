@@ -6,6 +6,8 @@ import {
   motion,
   MotionConfig,
   Transition,
+  useMotionValue,
+  useTransform,
 } from "framer-motion";
 import React from "react";
 import Image from "next/image";
@@ -13,6 +15,7 @@ import svgPhone from "@/assets/iphone-black.svg";
 import imageShopDollar from "./shop-dollar.jpg";
 import imageShop from "./shop.png";
 import imageShopify from "./shopify.png";
+import { ArrowRight, CheckIcon } from "lucide-react";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -23,6 +26,24 @@ const Context = React.createContext<{
 
 function InnerContent() {
   const ctx = React.useContext(Context);
+  const isClaimed = ctx.status === "claimed";
+  const x = useMotionValue(0);
+  const opacity = useTransform(x, [0, 150], [1, 0]);
+  const bgColor = useTransform(
+    x,
+    [0, 150],
+    ["rgb(204 204 204 / 0.3)", "rgb(159 226 191 / 0.6)"],
+  );
+
+  React.useEffect(() => {
+    if (isClaimed) {
+      const timeout = setTimeout(() => {
+        x.set(0);
+        ctx.setStatus("idle");
+      }, 2500);
+      return () => clearTimeout(timeout);
+    }
+  }, [isClaimed, ctx.setStatus]);
 
   return (
     <div className="relative flex h-full flex-col overflow-hidden rounded-[51px] bg-white p-2.5 text-[#1F1F1F]">
@@ -33,10 +54,13 @@ function InnerContent() {
         <Image
           src={imageShopDollar}
           alt="shop background"
-          className="size-full absolute left-0 top-0 object-cover brightness-110"
+          className="size-full absolute left-0 top-0 rounded-[46px] object-cover brightness-110"
         />
 
-        <div className="z-10 flex w-full flex-col items-center space-y-6 rounded-[41px] bg-[#cccccc]/30 px-6 py-5 text-center backdrop-blur-xl">
+        <motion.div
+          style={{ backgroundColor: bgColor }}
+          className="z-10 flex w-full flex-col items-center space-y-6 rounded-[46px] px-6 py-5 text-center backdrop-blur-xl"
+        >
           <div className="space-y-3">
             <p className="text-2xl font-semibold tracking-tight">
               Here&apos;s $5!
@@ -48,7 +72,31 @@ function InnerContent() {
             </p>
           </div>
           <div className="flex w-full flex-col items-center space-y-3">
-            <div className="h-14 w-full rounded-full bg-[#5533ea]"></div>
+            <div className="relative isolate h-14 w-full rounded-full bg-[#5533ea] p-1.5">
+              <motion.div
+                drag="x"
+                dragConstraints={{ left: 0, right: 196 }}
+                dragElastic={{ left: 0, right: 0 }}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x >= 196 || info.velocity.x > 500) {
+                    ctx.setStatus("claimed");
+                  } else {
+                    x.set(0);
+                  }
+                }}
+                whileTap={{ scale: 1.05 }}
+                style={{ x }}
+                className="relative z-10 grid h-full w-20 place-items-center rounded-full bg-white"
+              >
+                <ArrowRight className="text-[#5533ea]" strokeWidth={3} />
+              </motion.div>
+              <motion.p
+                style={{ opacity }}
+                className="absolute right-5 top-1/2 -translate-y-1/2 text-lg font-[550] tracking-tight text-white"
+              >
+                Claim $5 Shop Cash
+              </motion.p>
+            </div>
             <div className="flex items-center gap-1">
               <p className="text-sm font-[550]">Powered by</p>
               <Image
@@ -58,7 +106,55 @@ function InnerContent() {
               />
             </div>
           </div>
-        </div>
+        </motion.div>
+
+        <AnimatePresence>
+          {isClaimed && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="size-full absolute left-0 top-0 z-20 flex flex-col items-center justify-center gap-6 rounded-[41px] backdrop-blur-xl"
+            >
+              <motion.div
+                initial={{ scale: 1.15, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 10 }}
+                className="size-16 relative flex items-center justify-center rounded-full bg-[#7baf93] p-3 text-white shadow-[0_1px_1px_0_rgba(0,0,0,0.02),0_4px_8px_0_rgba(0,0,0,0.04)] ring-[0.8px] ring-black/[0.08]"
+              >
+                <CheckIcon strokeWidth={4} className="size-full" />
+              </motion.div>
+
+              <motion.p
+                initial={{ scale: 0.9, y: 10 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 10 }}
+                className="text-balance max-w-[180px] pb-6 text-center text-2xl font-[550] tracking-tight text-white"
+              >
+                You claimed $5 in Shop Cash!
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {isClaimed && (
+            <>
+              <motion.div
+                initial={{ bottom: "-67%" }}
+                animate={{ top: "-67%" }}
+                transition={{ ...transition, duration: 1 }}
+                className="absolute left-0 z-30 h-2/3 w-1 -translate-x-px bg-[radial-gradient(circle,rgba(159,226,191,1)_0%,rgba(0,0,0,0)_100%)]"
+              />
+              <motion.div
+                initial={{ bottom: "-67%" }}
+                animate={{ top: "-67%" }}
+                transition={{ ...transition, duration: 1 }}
+                className="absolute right-0 z-30 h-2/3 w-1 translate-x-px bg-[radial-gradient(circle,rgba(159,226,191,1)_0%,rgba(0,0,0,0)_100%)]"
+              />
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
