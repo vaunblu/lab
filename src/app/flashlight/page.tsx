@@ -14,7 +14,12 @@ function InnerContent() {
   const ctx = React.useContext(Context);
 
   return (
-    <div className="h-[250px] w-[500px] bg-[radial-gradient(farthest-side_at_bottom,#f5f2fe_10%,transparent_100%)] [mask:conic-gradient(from_-65deg_at_bottom,transparent_0deg,rgba(0,0,0,0.9)_20deg_110deg,transparent_130deg)]"></div>
+    <div className="relative h-[300px] w-[600px] overflow-visible">
+      <div className="absolute bottom-[30px] left-[calc(50%-50px)] h-[250px] w-[150px] origin-bottom -rotate-[60deg] bg-[linear-gradient(90deg,red_0%,orange_30%,yellow_40%,green_45%,blue_80%,purple_100%)] opacity-20 blur-xl [mask:radial-gradient(circle_at_center,black_0%,transparent_70%)]" />
+      <div className="absolute bottom-[30px] right-[calc(50%-50px)] h-[250px] w-[150px] origin-bottom rotate-[60deg] bg-[linear-gradient(270deg,red_0%,orange_30%,yellow_40%,green_45%,blue_80%,purple_100%)] opacity-20 blur-xl [mask:radial-gradient(circle_at_center,black_0%,transparent_70%)]" />
+      <div className="absolute bottom-0 left-1/2 h-[250px] w-[500px] -translate-x-1/2 bg-[radial-gradient(farthest-side_at_bottom,#dcd8ff_0%,transparent_100%)] blur-lg [mask:conic-gradient(from_-65deg_at_bottom,transparent_0deg,rgba(0,0,0,0.5)_20deg_110deg,transparent_130deg)]" />
+      <div className="absolute bottom-0 left-1/2 h-[70px] w-[50px] -translate-x-1/2"></div>
+    </div>
   );
 }
 
