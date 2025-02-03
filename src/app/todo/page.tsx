@@ -21,13 +21,12 @@ function InnerContent() {
   const ctx = React.useContext(Context);
 
   const [items, setItems] = React.useState([
-    { id: "1", text: "One", checked: true },
-    { id: "2", text: "Two", checked: true },
-    { id: "3", text: "Three", checked: false },
-    { id: "4", text: "Four", checked: true },
-    { id: "5", text: "Five", checked: true },
-    { id: "6", text: "Six", checked: true },
-    { id: "7", text: "Seven", checked: true },
+    { id: "1", text: "60 mins practice", checked: true },
+    { id: "2", text: "Coffee", checked: true },
+    { id: "3", text: "Work", checked: false },
+    { id: "4", text: "Walk pupper", checked: true },
+    { id: "5", text: "Climb", checked: true },
+    { id: "6", text: "Wind down", checked: true },
   ]);
 
   const [ref, animate] = useAnimate();
@@ -48,7 +47,10 @@ function InnerContent() {
         // bounce
         animate(
           '[data-slot="checkbox"]',
-          { scale: [1, 1.25, 1] },
+          {
+            scale: [1, 1.25, 1],
+            filter: ["blur(0px)", "blur(1px)", "blur(0px)"],
+          },
           {
             duration: 0.4,
             delay: stagger(0.1, { from: lastCompletedItemIndex }),
@@ -58,7 +60,10 @@ function InnerContent() {
         // shimmy
         animate(
           '[data-slot="checkbox"]',
-          { x: [0, 2, -2, 0] },
+          {
+            x: [0, 2, -2, 0],
+            filter: ["blur(0px)", "blur(1px)", "blur(0px)"],
+          },
           {
             duration: 0.4,
             delay: stagger(0.1, { from: lastCompletedItemIndex }),
@@ -68,7 +73,10 @@ function InnerContent() {
         // shake
         animate(
           '[data-slot="checkbox"]',
-          { rotate: [0, 12, -12, 0] },
+          {
+            rotate: [0, 12, -12, 0],
+            filter: ["blur(0px)", "blur(1px)", "blur(0px)"],
+          },
           {
             duration: 0.5,
             delay: stagger(0.1, { from: lastCompletedItemIndex }),
@@ -79,23 +87,30 @@ function InnerContent() {
   }
 
   return (
-    <div className="w-72 space-y-4">
-      <div className="text-xl font-semibold tracking-tight">Checklist</div>
-      <div ref={ref} className="space-y-4">
+    <div className="w-72 space-y-6">
+      <div className="text-xl">My day</div>
+      <div ref={ref} className="space-y-3">
         {items.map((item) => (
           <label
             key={item.id}
-            className={`group flex w-full cursor-pointer select-none items-center gap-4 rounded text-sm font-medium transition-colors duration-300 checked:text-gray-300 ${
-              item.checked ? "text-gray-400 line-through" : "text-gray-800"
+            className={`group flex w-full cursor-pointer select-none items-center gap-4 rounded text-sm font-medium transition-colors duration-300 checked:text-foreground/40 ${
+              item.checked ? "text-foreground/30 line-through" : "text-gray-800"
             }`}
           >
-            <Checkbox
-              data-slot="checkbox"
-              onClick={() => handleChange(item.id)}
-              checked={item.checked}
-              className="rounded-none transition-colors duration-300"
-            />
-
+            <motion.span
+              whileTap={{
+                scale: 0.9,
+                filter: "blur(0.5px)",
+              }}
+              className="size-4"
+            >
+              <Checkbox
+                data-slot="checkbox"
+                onClick={() => handleChange(item.id)}
+                checked={item.checked}
+                className="rounded-none transition-colors duration-300"
+              />
+            </motion.span>
             <span>{item.text}</span>
           </label>
         ))}
