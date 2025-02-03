@@ -18,8 +18,6 @@ const Context = React.createContext<{
 }>({ status: "", setStatus: () => null });
 
 function InnerContent() {
-  const ctx = React.useContext(Context);
-
   const [items, setItems] = React.useState([
     { id: "1", text: "60 mins practice", checked: true },
     { id: "2", text: "Coffee", checked: true },
@@ -78,8 +76,8 @@ function InnerContent() {
             filter: ["blur(0px)", "blur(1px)", "blur(0px)"],
           },
           {
-            duration: 0.5,
-            delay: stagger(0.1, { from: lastCompletedItemIndex }),
+            duration: 1,
+            delay: stagger(0.2, { from: lastCompletedItemIndex }),
           },
         );
       }
