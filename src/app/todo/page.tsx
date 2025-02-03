@@ -1,7 +1,13 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { motion, MotionConfig, type Transition } from "framer-motion";
+import {
+  motion,
+  MotionConfig,
+  stagger,
+  useAnimate,
+  type Transition,
+} from "framer-motion";
 import React from "react";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
@@ -24,6 +30,8 @@ function InnerContent() {
     { id: "7", text: "Seven", checked: true },
   ]);
 
+  const [ref, animate] = useAnimate();
+
   function handleChange(id: string) {
     const newItems = items.map((item) => ({
       ...item,
@@ -31,12 +39,49 @@ function InnerContent() {
     }));
 
     setItems(newItems);
+
+    if (newItems.every((item) => item.checked)) {
+      const lastCompletedItemIndex = items.findIndex((item) => !item.checked);
+      const random = Math.random();
+
+      if (random < 1 / 3) {
+        // bounce
+        animate(
+          '[data-slot="checkbox"]',
+          { scale: [1, 1.25, 1] },
+          {
+            duration: 0.4,
+            delay: stagger(0.1, { from: lastCompletedItemIndex }),
+          },
+        );
+      } else if (random < 2 / 3) {
+        // shimmy
+        animate(
+          '[data-slot="checkbox"]',
+          { x: [0, 2, -2, 0] },
+          {
+            duration: 0.4,
+            delay: stagger(0.1, { from: lastCompletedItemIndex }),
+          },
+        );
+      } else {
+        // shake
+        animate(
+          '[data-slot="checkbox"]',
+          { rotate: [0, 12, -12, 0] },
+          {
+            duration: 0.5,
+            delay: stagger(0.1, { from: lastCompletedItemIndex }),
+          },
+        );
+      }
+    }
   }
 
   return (
     <div className="w-72 space-y-4">
       <div className="text-xl font-semibold tracking-tight">Checklist</div>
-      <div className="space-y-4">
+      <div ref={ref} className="space-y-4">
         {items.map((item) => (
           <label
             key={item.id}
@@ -45,11 +90,13 @@ function InnerContent() {
             }`}
           >
             <Checkbox
+              data-slot="checkbox"
               onClick={() => handleChange(item.id)}
               checked={item.checked}
               className="rounded-none transition-colors duration-300"
             />
-            {item.text}
+
+            <span>{item.text}</span>
           </label>
         ))}
       </div>
