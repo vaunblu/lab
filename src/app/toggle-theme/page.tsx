@@ -169,8 +169,8 @@ function InnerContent() {
                 Appearance
               </div>
               <motion.button
-                onMouseDown={() => setPressing(true)}
-                onMouseUp={() => {
+                onTouchStart={() => setPressing(true)}
+                onTouchEnd={() => {
                   setPressing(false);
                   setDark((prev) => !prev);
                 }}
