@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const examples = [
+  "animated-tabs",
   "toggle-theme",
   "smooth-dropdown",
   "todo",
