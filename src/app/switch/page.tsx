@@ -20,20 +20,22 @@ function InnerContent() {
     <SwitchPrimitive.Root
       checked={checked}
       onCheckedChange={setChecked}
-      className="flex w-48 rounded-[30px] bg-white p-2 shadow-mixed data-[state=checked]:justify-end"
+      className="flex w-48 rounded-[30px] bg-[#1f1f1f]/80 p-2 shadow-mixed transition-colors data-[state=checked]:justify-end data-[state=checked]:bg-[#53828c]"
     >
       <SwitchPrimitive.Thumb asChild>
         <motion.div
           key={checked ? "checked" : "unchecked"}
           layoutId="switch-thumb"
           whileTap={{
-            width: 100,
+            width: 110,
             height: 72,
             margin: 4,
             borderRadius: 20,
           }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: checked ? 1 : 0.8 }}
           style={{ borderRadius: 22 }}
-          className="size-20 bg-[#1f1f1f] shadow-mixed"
+          className="size-20 bg-[#fafafa] shadow-mixed"
         />
       </SwitchPrimitive.Thumb>
     </SwitchPrimitive.Root>
