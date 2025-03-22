@@ -1,5 +1,6 @@
 "use client";
 
+import { GrainyBackground } from "@/components/grainy-background";
 import { cn } from "@/lib/utils";
 import {
   AnimatePresence,
@@ -45,10 +46,10 @@ export default function HomePage() {
     <Context.Provider value={{ status, setStatus }}>
       <MotionConfig transition={transition}>
         <main className="flex h-screen select-none items-center justify-center overflow-hidden">
-          <div
-            className={cn(
-              "relative flex aspect-square h-screen items-center justify-center bg-gradient-to-br from-[#FFFFFF] from-20% to-[#EEEEEE] transition-colors duration-300",
-            )}
+          <GrainyBackground
+            className="relative flex aspect-square h-screen items-center justify-center transition-colors duration-300"
+            grainOpacity={0.12}
+            grainContrast={0.7}
           >
             <div className="absolute left-1/2 top-1/2 z-20 h-[814px] w-[376px] -translate-x-1/2 -translate-y-1/2">
               <InnerContent />
@@ -63,7 +64,7 @@ export default function HomePage() {
               alt="iphone mock"
               className="pointer-events-none relative z-30"
             />
-          </div>
+          </GrainyBackground>
         </main>
       </MotionConfig>
     </Context.Provider>
