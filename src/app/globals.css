@@ -88,3 +88,11 @@
     /* Firefox */
   }
 }
+
+[vaul-drawer] {
+  transition: transform 2.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+[vaul-overlay] {
+  transition: opacity 2.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}

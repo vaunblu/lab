@@ -8,13 +8,14 @@ import {
   MotionConfig,
   Transition,
 } from "framer-motion";
-import React, { useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import svgPhone from "@/assets/iphone-black.svg";
 import { nanoid } from "nanoid";
 import NumberFlow from "@number-flow/react";
 import { Plus } from "lucide-react";
 import { transactionsData } from "./transactions";
+
 import {
   Drawer,
   DrawerContent,
@@ -23,6 +24,8 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import useMeasure from "react-use-measure";
 
 const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
@@ -36,20 +39,34 @@ type Transaction = {
   title: string;
   cost: number;
   date: string;
+  category: string;
+  appearsAs: string;
+  isACH: boolean;
+  summary: string;
 };
 
 const activeTransactionAtom = atom<Transaction | null>(null);
 
 function InnerContent() {
+  const ctx = useContext(Context);
   let [transactions, setTransactions] = useState<Array<Transaction>>([
     { id: nanoid(), ...transactionsData[0] },
     { id: nanoid(), ...transactionsData[1] },
     { id: nanoid(), ...transactionsData[2] },
   ]);
   const [open, setOpen] = useState(false);
+  const [expand, setExpand] = useState(false);
   const [activeTransaction, setActiveTransaction] = useAtom(
     activeTransactionAtom,
   );
+  const [elementRef, bounds] = useMeasure();
+  const [innerElementRef, innerBounds] = useMeasure();
+
+  useEffect(() => {
+    if (!open) {
+      ctx.setStatus("idle");
+    }
+  }, [ctx, open]);
 
   const transactionTotal = useMemo(() => {
     let total = 0;
@@ -66,9 +83,9 @@ function InnerContent() {
     setTransactions([{ id: newId, ...randomTransaction }, ...transactions]);
   }
 
-  function removeTodo(transaction: Transaction) {
+  function removeTodo(transactionId: Transaction["id"]) {
     setTransactions((transactions) =>
-      transactions.filter((t) => t.id !== transaction.id),
+      transactions.filter((t) => t.id !== transactionId),
     );
   }
 
@@ -108,6 +125,7 @@ function InnerContent() {
                     setActiveTransaction(transaction);
                     setOpen(true);
                   }}
+                  whileTap={{ scale: 0.96 }}
                   key={transaction.id}
                   initial={{ height: 0, scale: 0.9, filter: "blur(4px)" }}
                   animate={{ height: "auto", scale: 1, filter: "blur(0px)" }}
@@ -130,7 +148,7 @@ function InnerContent() {
         <div
           className={cn(
             "absolute bottom-0 left-0 h-1/5 w-full bg-gradient-to-t from-[#fafafa] transition-all duration-300 ease-out",
-            open && "h-full",
+            open && "h-[150vh]",
           )}
         />
         <div
@@ -141,14 +159,115 @@ function InnerContent() {
         />
 
         <Drawer open={open} onOpenChange={setOpen}>
-          <DrawerContent className="absolute border-0 bg-transparent p-4 pt-2 shadow-none">
-            <DrawerTitle className="sr-only">Transaction Info</DrawerTitle>
-            <DrawerDescription className="sr-only">{`More info for the ${activeTransaction?.title} transaction`}</DrawerDescription>
-            <div className="rounded-[41px] border border-border bg-[#e5e6e8] p-6">
-              <p>{activeTransaction?.title}</p>
-              <p>{activeTransaction?.date}</p>
-              <Button className="w-full rounded-full">Delete</Button>
-            </div>
+          <DrawerContent
+            asChild
+            className="absolute bottom-0 origin-bottom border-0 bg-transparent shadow-mixed"
+          >
+            <motion.div
+              animate={{ height: bounds.height }}
+              className="origin-bottom"
+            >
+              <div ref={elementRef} className="p-4 pt-2">
+                <DrawerTitle className="sr-only">Transaction Info</DrawerTitle>
+                <DrawerDescription className="sr-only">{`More info for the ${activeTransaction?.title} transaction`}</DrawerDescription>
+                <div className="space-y-6 rounded-[41px] border border-border bg-[#e5e6e8] p-6 shadow-sm">
+                  <AnimatePresence mode="popLayout">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{
+                        ease: [0.26, 0.08, 0.25, 1],
+                      }}
+                      className="w-full space-y-2"
+                    >
+                      <div className="space-y-4">
+                        <div className="space-y-1.5">
+                          <div className="flex items-center justify-between">
+                            <p className="text-xl font-medium tracking-tight">
+                              {activeTransaction?.title}
+                            </p>
+                            <p className="text-xl font-medium tracking-tight">
+                              {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              }).format(activeTransaction?.cost!)}
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <p className="text-xs">{activeTransaction?.date}</p>
+                            <Badge
+                              variant="secondary"
+                              className="text-xs font-light"
+                            >
+                              {activeTransaction?.category}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="space-y-2 px-0">
+                          <div>
+                            <p className="text-xs text-muted-foreground">
+                              Description
+                            </p>
+                            <p className="text-sm">
+                              {activeTransaction?.summary}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">
+                              Appears as
+                            </p>
+                            <p className="text-sm">
+                              {activeTransaction?.appearsAs}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="text-xs text-muted-foreground">
+                              Additional details
+                            </p>
+                            <p className="text-sm">
+                              {activeTransaction?.isACH ? "ACH" : "Wire"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  <div className="flex items-center gap-2">
+                    {/* <Button */}
+                    {/*   variant={"default"} */}
+                    {/*   className="w-full rounded-full" */}
+                    {/*   asChild */}
+                    {/* > */}
+                    {/*   <motion.button whileTap={{ scale: 0.9 }}> */}
+                    {/*     Share */}
+                    {/*   </motion.button> */}
+                    {/* </Button> */}
+                    <Button
+                      onClick={() => {
+                        if (ctx.status === "delete" && activeTransaction) {
+                          removeTodo(activeTransaction.id);
+                          setOpen(false);
+                          setActiveTransaction(null);
+                        } else {
+                          ctx.setStatus("delete");
+                        }
+                      }}
+                      variant={
+                        ctx.status === "delete" ? "destructive" : "default"
+                      }
+                      className="w-full rounded-full"
+                      asChild
+                    >
+                      <motion.button whileTap={{ scale: 0.9 }}>
+                        {ctx.status === "delete" ? "Continue" : "Delete"}
+                      </motion.button>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </DrawerContent>
         </Drawer>
       </div>
