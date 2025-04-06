@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const examples = [
+  "timer",
+  "transaction-drawer",
   "switch",
   "animated-list",
   "animated-tabs",

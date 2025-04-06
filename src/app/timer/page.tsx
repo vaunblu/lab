@@ -134,8 +134,12 @@ function InnerContent() {
         </div>
       </div>
 
-      <div
-        className="absolute h-full w-full rounded-[48px] bg-gradient-to-t from-[#53828c]/60 to-[#e5eeee]"
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={paused ? { opacity: 0.3 } : {}}
+        className={cn(
+          "absolute h-full w-full rounded-[48px] bg-gradient-to-t from-[#53828c]/60 to-[#e5eeee]",
+        )}
         style={{
           clipPath: `inset(${100 - minutesLeft}% 0 0 0)`,
           transition: "clip-path 1s linear",
@@ -171,9 +175,9 @@ export default function HomePage() {
               <InnerContent />
             </div>
 
-            <div className="fixed bottom-[72px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28">
-              <div className="size-full rounded-3xl bg-black" />
-            </div>
+            {/* <div className="fixed bottom-[72px] left-1/2 z-50 h-1.5 w-[360px] -translate-x-1/2 px-28"> */}
+            {/*   <div className="size-full rounded-3xl bg-black" /> */}
+            {/* </div> */}
 
             <Image
               src={svgPhone}
