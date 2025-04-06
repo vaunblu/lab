@@ -30,6 +30,8 @@ const config = {
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "border-gradient":
+          "linear-gradient(to bottom, black var(--progress), transparent var(--progress))",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -83,10 +85,15 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        borderTimer: {
+          "0%": { clipPath: "inset(0 0 0 0)" },
+          "100%": { clipPath: "inset(0 0 100% 0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "border-timer": "borderTimer var(--duration) linear forwards",
       },
     },
   },
