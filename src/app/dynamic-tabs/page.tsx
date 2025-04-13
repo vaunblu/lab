@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import React from "react";
 
-const transition: Transition = { type: "spring", bounce: 0, duration: 3.4 };
+const transition: Transition = { type: "spring", bounce: 0, duration: 0.4 };
 
 const Context = React.createContext<{
   status: string;
@@ -31,18 +31,23 @@ function InnerContent() {
     <div className="flex items-center rounded-full bg-[#fafafa] p-0.5 text-lg shadow-xl">
       <motion.button
         onClick={() => ctx.setBgStatus("system")}
-        animate={{
-          color: ctx.bgStatus === "system" ? "#ffffff" : "#000000",
-        }}
+        animate={
+          {
+            // color: ctx.bgStatus === "system" ? "#ffffff" : "#000000",
+          }
+        }
         className={cn("relative h-12 w-[175px] rounded-full")}
       >
         {ctx.bgStatus === "system" && (
           <motion.div
             layoutId="active-bg-pill"
-            className="absolute inset-0 rounded-full bg-black"
+            style={{ borderRadius: 99999 }}
+            className="absolute inset-0 bg-black"
           />
         )}
-        <span className="relative z-10">System</span>
+        <span className="relative z-20 text-white mix-blend-exclusion">
+          System
+        </span>
       </motion.button>
 
       <div className={cn("relative h-12 w-[175px] rounded-full")}>
@@ -58,9 +63,9 @@ function InnerContent() {
               >
                 <motion.div className="relative z-10 flex flex-col items-center">
                   <motion.div
-                    initial={{ y: -10, scale: 0.8 }}
-                    animate={{ y: 0, scale: 1 }}
-                    exit={{ y: -10, scale: 0.8 }}
+                    // initial={{ y: -10, scale: 0.8 }}
+                    // animate={{ y: 0, scale: 1 }}
+                    // exit={{ y: -10, scale: 0.8 }}
                     layoutId="manual-text"
                     className="h-[20px]"
                   >
@@ -87,49 +92,49 @@ function InnerContent() {
               <>
                 <motion.div
                   layoutId="active-bg-pill"
-                  className="absolute inset-0 rounded-full bg-black"
+                  style={{ borderRadius: 99999 }}
+                  className="absolute inset-0 z-10 bg-black"
                 />
                 <motion.div
-                  layout
+                  initial={{ opacity: 0, filter: "blur(4px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
                   transition={{ ...transition, delay: 0.1 }}
-                  className="relative flex h-12 w-[175px] items-center rounded-full p-0.5"
+                  className="relative z-20 flex h-12 w-[175px] items-center rounded-full p-0.5"
                 >
                   <motion.button
                     layoutId="light-container"
-                    initial={{ opacity: 0, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, filter: "blur(0px)" }}
                     onClick={() => ctx.setStatus("light")}
-                    className="relative h-full w-full rounded-full"
+                    className="relative h-full w-full rounded-full text-white"
                   >
                     {ctx.status === "light" && (
                       <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 z-10 rounded-full bg-white mix-blend-difference"
+                        style={{ borderRadius: 99999 }}
+                        className="absolute inset-0 bg-white"
                       />
                     )}
                     <motion.span
                       layoutId="light-text"
-                      className="relative text-white"
+                      className="relative z-30 mix-blend-exclusion"
                     >
                       Light
                     </motion.span>
                   </motion.button>
                   <motion.button
                     layoutId="dark-container"
-                    initial={{ opacity: 0, filter: "blur(4px)" }}
-                    animate={{ opacity: 1, filter: "blur(0px)" }}
                     onClick={() => ctx.setStatus("dark")}
-                    className="relative h-full w-full rounded-full"
+                    className="relative h-full w-full rounded-full text-white"
                   >
                     {ctx.status === "dark" && (
                       <motion.div
                         layoutId="active-pill"
-                        className="absolute inset-0 z-10 rounded-full bg-white mix-blend-difference"
+                        style={{ borderRadius: 99999 }}
+                        className="absolute inset-0 z-20 bg-white"
                       />
                     )}
                     <motion.span
                       layoutId="dark-text"
-                      className="relative text-white"
+                      className="relative z-30 mix-blend-exclusion"
                     >
                       Dark
                     </motion.span>
